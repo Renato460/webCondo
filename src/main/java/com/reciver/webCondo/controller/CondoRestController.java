@@ -1,11 +1,14 @@
 package com.reciver.webCondo.controller;
 
-import com.reciver.webCondo.model.NotificationModel;
+import com.reciver.webCondo.model.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.reciver.webCondo.repository.NotificationRepository;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api")
@@ -20,9 +23,20 @@ public class CondoRestController {
             return new ResponseEntity<>("Missing Data", HttpStatus.BAD_REQUEST);
         }
 
-        notificationRepository.save(new NotificationModel(api_version, notification_token));
+        notificationRepository.save(new Notification(api_version, notification_token));
 
         return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/get", method = RequestMethod.GET)
+    public ResponseEntity<Map<String,Object>> getNotification (){
+        return new ResponseEntity<>(notificationDTO(),HttpStatus.OK);
+    }
+
+    private Map<String,Object> notificationDTO (){
+        Map<String,Object> dto = new LinkedHashMap<>();
+        dto.put("notifications",notificationRepository.findAll());
+
+        return dto;
+    }
 }

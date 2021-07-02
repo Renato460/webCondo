@@ -5,7 +5,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-public class NotificationModel {
+public class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
@@ -15,12 +15,12 @@ public class NotificationModel {
     private String api_version;
     private String notification_token;
 
-    public NotificationModel(String api_version, String notification_token) {
+    public Notification(String api_version, String notification_token) {
         this.api_version = api_version;
         this.notification_token = notification_token;
     }
 
-    public NotificationModel() {
+    public Notification() {
     }
 
     public long getId() {
